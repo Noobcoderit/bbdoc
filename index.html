@@ -6,6 +6,7 @@
 <title>B'baria Dr.</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+/* CSS কোড অপরিবর্তিত আছে */
 body{font-family:'Noto Sans Bengali',Arial,sans-serif;margin:0;padding:0;background:#f2f2f2;color:#222;transition:background .3s,color .3s}
 body.dark-mode{background:#121212;color:#ddd}
 h2{text-align:center;margin:0;padding:8px 0;position:sticky;top:0;background:#f2f2f2;z-index:10;font-size:16px}
@@ -13,12 +14,12 @@ body.dark-mode h2{background:#121212}
 .controls{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-bottom:5px;padding:3px;position:sticky;top:32px;background:#f2f2f2;z-index:10}
 body.dark-mode .controls{background:#121212}
 
-/* সাধারণ বাটন/ইনপুট স্টাইল (এটা মাঝারি সাইজ) */
+/* সাধারণ বাটন/ইনপুট স্টাইল */
 input,select,button{padding:5px 8px;font-size:12px;border-radius:5px;border:1px solid #ccc;transition:background .3s,color .3s,border .3s, transform .2s, box-shadow .2s}
 body.dark-mode input,body.dark-mode select{background:#1e1e1e;color:#ddd;border:1px solid #555}
 button{cursor:pointer;border:none}
 
-/* হোভার/ফোকাস ইফেক্ট (আগের মতোই আছে) */
+/* হোভার/ফোকাস ইফেক্ট */
 button:hover:not(#submitBtn):not(.close-btn) { 
     transform: scale(1.05); 
     box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
@@ -36,18 +37,35 @@ body.dark-mode input:focus, body.dark-mode select:focus {
 /* নির্দিষ্ট বাটনের কালার */
 #refreshBtn{background:#0077cc;color:#fff}
 #todayDoctorBtn{background:#ff6600;color:white;font-weight:bold}
+#favFilterBtn{background:#e91e63;color:white;font-weight:bold} /* ফেভারিট বাটন কালার */
 #weeklyFilter{background:#4CAF50;color:white;font-weight:bold;border:none}
 #darkModeBtn{background:#555;color:#fff}
 #addDoctorBtn{background:#28a745;color:#fff}
 
 #todayDoctorBtn.active-filter-btn{box-shadow:0 2px 5px rgba(255,102,0,.5);transform:scale(1.02);border:1px solid #ff6600}
+#favFilterBtn.active-filter-btn{box-shadow:0 2px 5px rgba(233,30,99,.5);transform:scale(1.02);border:2px solid #fff}
 
 #doctorContainer{max-width:600px;margin:0 auto;padding:10px;height:calc(100vh - 150px);overflow-y:auto}
 
-.card{padding:10px;margin:8px 0;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.1);opacity:0;transform:translateY(10px);background:#fff;transition:transform .2s,opacity .5s}
+.card{padding:10px;margin:8px 0;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.1);opacity:0;transform:translateY(10px);background:#fff;transition:transform .2s,opacity .5s; position: relative;}
 body.dark-mode .card{background:#1e1e1e;color:#ddd}
 .card.show{opacity:1;transform:translateY(0)}
-.doctor-name{font-size:18px;font-weight:bold;color:#0077cc;margin-bottom:8px;text-align:center;padding-bottom:3px;border-bottom:1px solid #f0f0f0}
+
+/* ফেভারিট হার্ট আইকন স্টাইল */
+.fav-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    transition: transform 0.2s;
+}
+.fav-icon:hover { transform: scale(1.2); }
+
+.doctor-name{font-size:18px;font-weight:bold;color:#0077cc;margin-bottom:8px;text-align:center;padding-bottom:3px;border-bottom:1px solid #f0f0f0; padding-right: 20px;}
 body.dark-mode .doctor-name{color:#4dabf5;border-bottom:1px solid #282828}
 .label{font-weight:bold;font-size:12px}
 .card p{margin:2px 0;font-size:12px;}
@@ -68,7 +86,7 @@ body.dark-mode .main-spinner{border-top:3px solid #4dabf5;border-bottom:3px soli
 @keyframes fadeIn{0%{opacity:0;transform:translateY(5px)}100%{opacity:1;transform:translateY(0)}}
 #doctorCount{text-align:center;margin:1px 0 3px 0;font-weight:bold;font-size:11px}
 
-/* --- আধুনিক সাবমিট UI স্টাইল (পরিবর্তন করা হয়নি) --- */
+/* --- আধুনিক সাবমিট UI স্টাইল --- */
 .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(45deg, rgba(0,0,0,0.5), rgba(0,0,0,0.7));justify-content:center;align-items:center;z-index:1000;opacity:0;transition:opacity .4s, backdrop-filter .4s; backdrop-filter: blur(0px);}
 .modal.show{display:flex;opacity:1;backdrop-filter: blur(5px);}
 
@@ -92,7 +110,7 @@ body.dark-mode .modal .box{background:#282828;color:#ddd; box-shadow:0 10px 30px
 .box h3{margin-bottom:20px;font-size:22px;color:#007bff;}
 body.dark-mode .box h3{color:#4dabf5;}
 
-/* Input field styles with focus effect */
+/* Input field styles */
 .input-group { 
     margin: 20px 0; 
     position: relative;
@@ -118,7 +136,7 @@ body.dark-mode .input-group:focus-within { border-bottom: 2px solid #4dabf5; }
 body.dark-mode .box input { color: #ddd; }
 
 
-/* Submit Button Style (Modal) */
+/* Submit Button Style */
 #submitBtn {
     width: 100%;
     padding: 10px;
@@ -136,11 +154,11 @@ body.dark-mode .box input { color: #ddd; }
     box-shadow: 0 6px 15px rgba(0, 123, 255, 0.6);
 }
 
-/* Close Button Style (Modal) */
+/* Close Button Style */
 .close-btn {
     width: 100%;
     padding: 10px;
-    background: #dc3545; /* Red */
+    background: #dc3545;
     color: white;
     font-size: 14px;
     font-weight: bold;
@@ -155,24 +173,25 @@ body.dark-mode .box input { color: #ddd; }
 
 #msg{margin-top:10px;font-size:12px;min-height:15px;font-weight:bold;}
 
-/* --- মোবাইল অপটিমাইজেশন: বাটন সাইজ বাড়ানো হয়েছে --- */
+/* --- মোবাইল অপটিমাইজেশন --- */
 @media (max-width: 600px) {
     .controls input:not(#searchInput), .controls select, .controls button {
-        padding: 4px 6px; /* <-- সাইজ বাড়ানো হলো */
-        font-size: 11px;  /* <-- ফন্ট সাইজ বাড়ানো হলো */
+        padding: 4px 6px; 
+        font-size: 11px;  
         width: calc(33.33% - 4px); 
     }
     .controls button:hover:not(#submitBtn):not(.close-btn) { 
         transform: scale(1.02); 
     }
     #searchInput {
-        padding: 5px 8px; /* <-- সার্চ ইনপুটের সাইজ বাড়ানো হলো */
-        font-size: 12px; /* <-- সার্চ ইনপুটের ফন্ট সাইজ বাড়ানো হলো */
+        padding: 5px 8px; 
+        font-size: 12px; 
         margin-bottom: 3px;
     }
     #refreshBtn, #todayDoctorBtn, #weeklyFilter {
         width: calc(33.33% - 4px); 
     }
+    #favFilterBtn { width: calc(50% - 4px); flex-grow: 1;}
     .modal .box { padding: 20px; }
     .box h3 { font-size: 20px; }
 }
@@ -183,18 +202,20 @@ body.dark-mode .box input { color: #ddd; }
 <h2>ব্রাহ্মণবাড়িয়া ডক্টর</h2>
 
 <div class="controls">
-    <input type="text" id="searchInput" placeholder="Search Name / Degree / Hospital">
+    <input type="text" id="searchInput" placeholder="খুঁজুন (নাম / ডিগ্রি / হাসপাতাল)">
     <select id="hospitalFilter"><option value="">হাসপাতাল</option></select>
-    <select id="treatmentFilter"><option value="">ট্রিটমেন্ট</option></select> 
+    <select id="treatmentFilter"><option value="">বিভাগ/চিকিৎসা</option></select> 
     <button id="refreshBtn">রিফ্রেস Dr. ♻️</button>
     <button id="todayDoctorBtn">আজকের Dr. 👨‍⚕️</button>
     
     <select id="weeklyFilter">
-        <option value="">সাপ্তাহিক Dr. 🗓️</option>
+        <option value="">সাপ্তাহিক Dr.🗓️</option>
     </select>
+
+    <button id="favFilterBtn">পছন্দের Dr.❤️</button>
     
     <button id="darkModeBtn">ডার্ক মুড 🌙</button>
-    <button id="addDoctorBtn">অ্যাড Dr.➕</button>
+    <button id="addDoctorBtn">অ্যাড Dr.🗒️</button>
 </div>
 <p id="doctorCount"></p>
 
@@ -202,11 +223,11 @@ body.dark-mode .box input { color: #ddd; }
 
 <button id="backToTop" onclick="document.getElementById('doctorContainer').scrollTo({top:0, behavior:'smooth'})">↑</button>
 
-<footer>made by SJ Shakil<br>version 1.0</footer>
+<footer>made by SJ Shakil<br>version 1.3</footer>
 
 <div id="doctorModal" class="modal">
     <div class="box">
-        <h3>Submit Doctor Information</h3>
+        <h3>ডক্টর তথ্য জমা দিন</h3>
         
         <div class="input-group">
             <input id="name" placeholder="আপনার নাম লিখুন" type="text">
@@ -218,10 +239,9 @@ body.dark-mode .box input { color: #ddd; }
             <input list="hospitalList" id="hospital" placeholder="হাসপাতাল নাম লিখুন" type="text">
             <datalist id="hospitalList"></datalist>
         </div>
-
-        <button id="submitBtn">Submit</button>
+        <button id="submitBtn">সাবমিট করুন</button>
         <p id="msg"></p>
-        <button onclick="closeModal()" class="close-btn">ক্লোজ ❌</button>
+        <button onclick="closeModal()" class="close-btn">বন্ধ করুন ❌</button>
     </div>
 </div>
 
@@ -229,9 +249,26 @@ body.dark-mode .box input { color: #ddd; }
 const jsonUrl = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLhR-Gul2odeHWlrhW_BwVV4jZeTDnM-FHOggdWfZV0KGDtqMcoIuW5tb1k9sf8FOAYoubSpNj7q0MzxDaeXjoWmZIYb0wL-w4TfFdKwp46lcKPhJO3GG1DZOteXuYXTBRtaXxu4FSYMg2RMO2zBMoXkQwt1p5XvKxVsdu4pLJ8ptBkI49pPVZl1Y5_PNSdqdbcxg3VvtoFv8MWAXRVXFJ2aY_8SrUt2Umd3v-7HA5kQBBF_ah3mAeO5cBTpogiNUDXqxu1Yz-LcV63xPORcmvULDxTDcw&lib=MDAqIAKv-Cob-tYNDcyKsIZGvrR6Rl4Ky";
 let allDoctors = [];
 let isTodayFilterActive = false; 
+let isFavFilterActive = false; 
+
+// ফেভারিট লোড করা
+let favorites = JSON.parse(localStorage.getItem('bbariaDrFav')) || [];
 
 const dayNamesBangla = ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"];
 const dayNamesEnglish = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+
+const treatmentListBangla = [
+
+    "ডায়াবেটিস", "হৃদরোগ", "উচ্চ রক্তচাপ", "ক্যান্সার", "হাঁপানি", "মাথাব্যথা", "মাইগ্রেন", "খিচুনি / এপিলেপসি", 
+    "স্ট্রোক", "ইউরোলজী, ল্যাপারোস্কপিক ও জেনারেল সার্জন ", "স্নায়ুর ব্যথা", "সর্দি–কাশি", "ইনফ্লুয়েঞ্জা", "ডেঙ্গু জ্বর", "চিকুনগুনিয়া", "ম্যালেরিয়া", 
+    "টাইফয়েড", "কলেরা", "হেপাটাইটিস (লিভারের প্রদাহ)", "যক্ষ্মা", "নিউমোনিয়া", "ধনুষ্টঙ্কার", "নিম্ন রক্তচাপ", 
+    "সার্জারী", " হাড়-জোড়া", "হৃদস্পন্দন অনিয়ম", "হৃৎপিণ্ডের ভালভের সমস্যা", "থাইরয়েড সমস্যা", 
+    "কিডনি রোগ", "বাতজ্বর", "আর্থ্রাইটিস", "ডায়রিয়া", "কৃমি", "অপুষ্টি", "হাম", "চিকেনপক্স", "টনসিলাইটিস", 
+    "চোখ চুলকানি", "কনজাংটিভাইটিস (চোখ উঠা)", "ছানি", "চোখের দৃষ্টি দুর্বল", "টনসিল সমস্যা", "সাইনোসাইটিস", 
+    "কান ব্যথা", "নাক বন্ধ", "গলা ব্যথা", "একজিমা", "চুলকানি", "ঘা", "অ্যালার্জি", "ফোড়া", "ফাঙ্গাল ইনফেকশন", 
+    "রক্তস্বল্পতা", "স্থূলতা", "মানসিক চাপ", "ডিপ্রেশন", "খাদ্যে বিষক্রিয়া"
+
+].sort();
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -249,13 +286,19 @@ function generateMainLoader(statusText="ডাটা লোড হচ্ছে..
 
 function loadDoctors(){ 
     const container = document.getElementById("doctorContainer");
-    container.innerHTML = generateMainLoader("⌛⌛ ব্রাহ্মণবাড়িয়া ডক্টর লোডিং ⌛⌛"); 
+    container.innerHTML = generateMainLoader("⌛⌛ ব্রাহ্মণবাড়িয়া ডক্টর লোডিং ⌛⌛"); 
     document.getElementById("doctorCount").textContent = `🕔🕔একটু অপেক্ষা করুন 🕔🕔...`;
 
     fetch(jsonUrl)
     .then(res=>res.json())
     .then(data=>{
-        allDoctors = data; 
+        // --- এখানে ইউনিক আইডি তৈরি করা হচ্ছে ---
+        // নাম + মোবাইল + হাসপাতাল মিলিয়ে ইউনিক আইডি বানানো হচ্ছে
+        allDoctors = data.map(d => ({
+            ...d,
+            uniqueID: (d.doctorname + (d.mobile||'') + (d.hospitalname||'')).replace(/\s/g, '')
+        }));
+        
         shuffleArray(allDoctors); 
         populateFilters();
         renderDoctors();
@@ -267,16 +310,28 @@ function loadDoctors(){
 
 function populateFilters(){
     const hospitals = [...new Set(allDoctors.map(d=>d.hospitalname))];
-    const treatments = [...new Set(allDoctors.flatMap(d => d.treatment ? d.treatment.split(/[,;]/).map(t => t.trim()) : []).filter(t => t))].sort();
-
+    
     const hospitalFilter = document.getElementById("hospitalFilter");
-    hospitalFilter.innerHTML='<option value="">Hospital</option>';
+    hospitalFilter.innerHTML='<option value="">হাসপাতাল</option>';
     hospitals.forEach(h=>{hospitalFilter.innerHTML+=`<option value="${h}">${h}</option>`;});
     hospitalFilter.addEventListener("change", renderDoctors);
 
+    // **এই অংশটি পরিবর্তন করা হয়েছে - শুধুমাত্র ইউনিক ট্রিটমেন্ট দেখাবে**
     const treatmentFilter = document.getElementById("treatmentFilter");
-    treatmentFilter.innerHTML='<option value="">Treatment</option>';
-    treatments.forEach(t=>{treatmentFilter.innerHTML+=`<option value="${t}">${t}</option>`;});
+    treatmentFilter.innerHTML='<option value="">বিভাগ/চিকিৎসা</option>';
+    
+    // JSON থেকে শুধুমাত্র ট্রিটমেন্ট গুলো নেয়া এবং ডুপ্লিকেট রিমুভ করা
+    const allTreatments = allDoctors.map(d => d.treatment || '').filter(t => t.trim() !== '');
+    const uniqueTreatments = [...new Set(allTreatments)];
+    
+    // আলফাবেটিকালি সাজানো
+    uniqueTreatments.sort();
+    
+    // ফিল্টারে অ্যাড করা
+    uniqueTreatments.forEach(t=>{
+        treatmentFilter.innerHTML+=`<option value="${t}">${t}</option>`;
+    });
+    
     treatmentFilter.addEventListener("change", renderDoctors); 
 
     const hospitalList = document.getElementById("hospitalList");
@@ -306,6 +361,17 @@ function isAvailableToday(timeString) {
     return isAvailableOnDay(timeString, dayNamesBangla[todayIndex]);
 }
 
+// --- ইউনিক আইডি দিয়ে ফেভারিট টগল ফাংশন ---
+function toggleFavorite(uniqueID){
+    if(favorites.includes(uniqueID)){
+        favorites = favorites.filter(id => id !== uniqueID); 
+    } else {
+        favorites.push(uniqueID); 
+    }
+    localStorage.setItem('bbariaDrFav', JSON.stringify(favorites)); 
+    renderDoctors(); 
+}
+
 function renderDoctors(){
     const container = document.getElementById("doctorContainer");
     container.innerHTML="";
@@ -316,28 +382,58 @@ function renderDoctors(){
 
     const filteredDoctors = allDoctors.filter(d=>{
         const searchMatch = (d.doctorname.toLowerCase().includes(searchText) || d.education.toLowerCase().includes(searchText) || d.hospitalname.toLowerCase().includes(searchText) || (d.treatment && d.treatment.toLowerCase().includes(searchText))); 
+        
         const hospitalMatch = (!filterHospital || d.hospitalname===filterHospital);
-        const treatmentMatch = (!filterTreatment || (d.treatment && d.treatment.toLowerCase().includes(filterTreatment.toLowerCase())));
+        
+        let treatmentMatch = true;
+        if (filterTreatment) {
+            if (d.treatment) {
+                // নির্বাচিত ফিল্টার ট্রিটমেন্ট
+                const selectedTreatmentLower = filterTreatment.toLowerCase();
+                
+                // ডক্টরের ট্রিটমেন্ট ডাটা
+                const doctorTreatmentLower = d.treatment.toLowerCase();
+
+                // ডাক্তারটির চিকিৎসা তালিকায় নির্বাচিত চিকিৎসা বিভাগটি আছে কি না
+                treatmentMatch = doctorTreatmentLower.includes(selectedTreatmentLower);
+
+            } else {
+                treatmentMatch = false; // ডাক্তারের কোনো ট্রিটমেন্ট তথ্য না থাকলে ম্যাচ করবে না
+            }
+        }
 
         const dayMatch = (!filterDay) ? true : isAvailableOnDay(d.time, filterDay);
         
         if(filterDay) isTodayFilterActive = false;
         const todayMatch = (isTodayFilterActive && !filterDay) ? isAvailableToday(d.time) : true;
+
+        // এখানে এখন ইউনিক আইডি চেক করা হচ্ছে
+        const favMatch = isFavFilterActive ? favorites.includes(d.uniqueID) : true;
         
-        return searchMatch && hospitalMatch && treatmentMatch && todayMatch && dayMatch; 
+        return searchMatch && hospitalMatch && treatmentMatch && todayMatch && dayMatch && favMatch; 
     });
 
-    // Update count & button status
-    document.getElementById("doctorCount").textContent = `মোট ${filteredDoctors.length} জন ডাক্তার ${isTodayFilterActive ? "(আজকের জন্য)" : filterDay ? `(${filterDay} এর জন্য)` : ""}`;
+    let countMsg = `মোট ${filteredDoctors.length} জন ডাক্তার`;
+    if(isTodayFilterActive) countMsg += " (আজকের জন্য)";
+    else if(filterDay) countMsg += ` (${filterDay} এর জন্য)`;
+    else if(isFavFilterActive) countMsg += " (আপনার পছন্দের ❤️)";
+
+    document.getElementById("doctorCount").textContent = countMsg;
+
     const todayBtn = document.getElementById("todayDoctorBtn");
     todayBtn.classList.toggle('active-filter-btn', isTodayFilterActive && !filterDay);
     todayBtn.textContent = isTodayFilterActive ? `সকল Dr. ❌` : `আজকের Dr. 👨‍⚕️`;
     todayBtn.style.backgroundColor = isTodayFilterActive ? '#cc5200' : '#ff6600';
 
+    const favBtn = document.getElementById("favFilterBtn");
+    favBtn.classList.toggle('active-filter-btn', isFavFilterActive);
+    favBtn.textContent = isFavFilterActive ? `সব Dr. দেখুন 🔙` : `পছন্দের Dr. 🤍`;
+
 
     if(filteredDoctors.length===0){
-        let msg = "কোনো ডক্টর পাওয়া যায়নি 😢আবার রিফ্রেস করুন ♻️!!";
-        if (isTodayFilterActive) msg = `আজকের দিনে ডক্টর নেই। আপনি আবার সকল Dr. ❌ চাপুন।`;
+        let msg = "কোনো ডক্টর পাওয়া যায়নি 😢আবার রিফ্রেস করুন ♻️!!";
+        if (isTodayFilterActive) msg = `আজকের দিনে ডক্টর নেই।`;
+        if (isFavFilterActive) msg = `আপনার কোনো পছন্দের ডাক্তার নেই 💔। হার্ট আইকনে ক্লিক করে সেভ করুন।`;
         container.innerHTML=generateMainLoader(msg);
         return;
     }
@@ -348,15 +444,20 @@ function renderDoctors(){
         card.className="card show"; 
         card.style.backgroundColor = getRandomColor(isDarkMode);
 
+        // ইউনিক আইডি দিয়ে চেক করা হচ্ছে
+        const isFav = favorites.includes(d.uniqueID);
+        const heartIcon = isFav ? '💝' : '💖';
+
         card.innerHTML=`
+            <button class="fav-icon" onclick="toggleFavorite('${d.uniqueID}')" title="${isFav ? 'Remove' : 'Save'}">${heartIcon}</button>
             <div class="doctor-name">${d.doctorname}</div>
             <p><span class="label">Degree:</span> ${d.education || 'N/A'}</p>
             <p><span class="label">Hospital:</span> ${d.hospitalname || 'N/A'}</p>
             <p><span class="label">Location:</span> ${d.hosplace || 'N/A'}</p>
             <p><span class="label">Specialist:</span> ${d.treatment || 'N/A'}</p>
             <p><span class="label">Time:</span> ${d.time || 'N/A'}</p>
-            <p><span class="label">Mobile:</span> ${d.mobile || 'N/A'}</p>
-            <button class="share-btn" onclick="shareDoctor('${d.doctorname}','${d.hospitalname}','${d.mobile}')">শেয়ার করুন 📤</button>
+            <p><span class="label">Mobile:</span> <a href="tel:${d.mobile}" style="text-decoration:none; color:inherit; font-weight:bold;">${d.mobile || 'N/A'} 📞</a></p>
+            <button class="share-btn" onclick="shareDoctor('${d.doctorname}','${d.hospitalname}','${d.mobile}')">শেয়ার করুন 📤</button>
         `;
         container.appendChild(card);
     });
@@ -365,15 +466,34 @@ function renderDoctors(){
 function shareDoctor(name,hospital,phone){
     const text = `ডক্টর: ${name}\nহসপিটাল: ${hospital}\nফোন: ${phone}`;
     if(navigator.share){ navigator.share({title:"Doctor Info", text}); }
-    else{ prompt("Copy this info:", text); }
+    else{ prompt("এই তথ্য কপি করুন:", text); } 
 }
 
 document.getElementById("searchInput").addEventListener("input", renderDoctors);
-document.getElementById("refreshBtn").addEventListener("click", loadDoctors); 
+
+// রিফ্রেস লজিক
+document.getElementById("refreshBtn").addEventListener("click", () => {
+    isTodayFilterActive = false;
+    isFavFilterActive = false;
+    document.getElementById("searchInput").value = "";
+    document.getElementById("hospitalFilter").value = "";
+    document.getElementById("treatmentFilter").value = "";
+    document.getElementById("weeklyFilter").value = "";
+    loadDoctors();
+});
+
 document.getElementById("todayDoctorBtn").addEventListener("click", () => {
     isTodayFilterActive = !isTodayFilterActive; 
+    isFavFilterActive = false; 
     document.getElementById("weeklyFilter").value = ""; 
     renderDoctors(); 
+});
+
+document.getElementById("favFilterBtn").addEventListener("click", () => {
+    isFavFilterActive = !isFavFilterActive;
+    isTodayFilterActive = false; 
+    document.getElementById("weeklyFilter").value = "";
+    renderDoctors();
 });
 
 document.getElementById("darkModeBtn").addEventListener("click", ()=>{
@@ -394,12 +514,11 @@ const modal = document.getElementById("doctorModal");
 document.getElementById("addDoctorBtn").addEventListener("click", ()=>{ modal.classList.add("show"); });
 function closeModal(){ 
     modal.classList.remove("show"); 
-    // Reset form after closing
     document.getElementById("name").value=""; 
     document.getElementById("doctor").value=""; 
     document.getElementById("hospital").value="";
     document.getElementById("msg").innerText = "";
-    document.getElementById("submitBtn").textContent = 'Submit';
+    document.getElementById("submitBtn").textContent = 'সাবমিট করুন';
 }
 
 const submitBtn = document.getElementById("submitBtn");
@@ -412,24 +531,23 @@ submitBtn.addEventListener("click", (e)=>{
     const hospital = document.getElementById("hospital").value.trim();
     
     if(!name || !doctor || !hospital){
-        msg.innerText="দুঃখিত সব ফিল্ড লাগবে!"; msg.style.color="red"; setTimeout(()=>{ msg.innerText=""; },3000); return;
+        msg.innerText="দুঃখিত! সব ফিল্ড পূরণ করা আবশ্যক।"; msg.style.color="red"; setTimeout(()=>{ msg.innerText=""; },3000); return; 
     }
 
-    submitBtn.textContent = 'Submitting...করা হচ্ছে'; 
+    submitBtn.textContent = 'Submitting... করা হচ্ছে'; 
     
     fetch("https://script.google.com/macros/s/AKfycbxpZRGPgFZlGgHhRAC3Mg0uhRxS2iFhZF4QVFP4A36CHPktsTWv-y8XKkrRP9pcRwla/exec",{
         method:"POST", body: JSON.stringify({name, doctor, hospital})
     })
     .then(res=>res.text())
     .then(()=>{
-        submitBtn.textContent = 'Submit';
-        msg.innerText="ধন্যবাদ🤝Submitted Successfully ✅"; msg.style.color="green";
-        
+        submitBtn.textContent = 'সাবমিট করুন';
+        msg.innerText="ধন্যবাদ🤝তথ্য সফলভাবে জমা হয়েছে ✅"; msg.style.color="green"; 
         setTimeout(() => { closeModal(); loadDoctors(); }, 4000); 
     })
     .catch(()=>{
-        submitBtn.textContent = 'Submit';
-        msg.innerText="Error submitting! Try again."; msg.style.color="red";
+        submitBtn.textContent = 'সাবমিট করুন';
+        msg.innerText="দুঃখিত! সাবমিটে সমস্যা হয়েছে, আবার চেষ্টা করুন।"; msg.style.color="red"; 
         setTimeout(()=>{ msg.innerText=""; },3000);
     });
 });
